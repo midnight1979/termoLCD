@@ -17,19 +17,44 @@ int sensor2 = 0;
 int sensor3Pin = A2;
 int sensor3 = 0;
 
+byte degr[8] = {
+  0b00000110, 0b00001001, 0b00001001, 0b00000110, 0b00000000
+
+};
+
 void setup()
 {
   /* Инициализируем дисплей: 2 строки по 16 символов */
   lcd.begin(16, 2);
+  lcd.createChar(0, degr);
+
   /* Выводим на дисплей традиционную фразу (: */
   lcd.setCursor(0, 0);
-  lcd.print("t1:");
+  lcd.print("T1");
+  lcd.write(byte(0));
+  lcd.print("C");
 
   lcd.setCursor(6, 0);
-  lcd.print("t2:");
+  lcd.print("T2");
+  lcd.write(byte(0));
+  lcd.print("C");
 
   lcd.setCursor(12, 0);
-  lcd.print("t3:");
+  lcd.print("T3");
+  lcd.write(byte(0));
+  lcd.print("C");
+
+  // play a note on pin 8 for 500 ms:
+  tone(8, 500, 300);
+  delay(100);
+  tone(8, 600, 300);
+  delay(100);
+  tone(8, 800, 300);
+  delay(100);
+  tone(8, 1000, 300);
+  delay(300);
+  noTone(8);
+
 
 }
 
@@ -46,6 +71,7 @@ void loop()
   lcd.setCursor(0, 1);
   sensor1 = map(sensor1, 191, 1023, 28, 150);
   lcd.print(sensor1);
+  lcd.write(byte(0));
 
   sensor2 = analogRead(sensor2Pin);
   lcd.setCursor(6, 1);
@@ -54,13 +80,15 @@ void loop()
   lcd.setCursor(6, 1);
   sensor2 = map(sensor2, 199, 1023, 28, 150);
   lcd.print(sensor2);
+  lcd.write(byte(0));
 
   sensor3 = analogRead(sensor3Pin);
   lcd.setCursor(12, 1);
   lcd.print("      ");
   /* Выводим на дисплей число секунд, прошедших с момента старта Arduino */
   lcd.setCursor(12, 1);
-  sensor3 = map(sensor3, 271, 1023, 28, 150);
+  sensor3 = map(sensor3, 282, 1023, 28, 150);
   lcd.print(sensor3);
+  lcd.write(byte(0));
   delay(1000);
 }
