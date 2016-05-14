@@ -24,6 +24,9 @@ byte degr[8] = {
 
 void setup()
 {
+
+  Serial.begin(9600);
+
   /* Инициализируем дисплей: 2 строки по 16 символов */
   lcd.begin(16, 2);
   lcd.createChar(0, degr);
@@ -44,6 +47,7 @@ void setup()
   lcd.write(byte(0));
   lcd.print("C");
 
+
   // play a note on pin 8 for 500 ms:
   tone(8, 500, 300);
   delay(100);
@@ -55,15 +59,12 @@ void setup()
   delay(300);
   noTone(8);
 
-
 }
 
 void loop()
 {
-  /* Устанавливаем курсор в 1 столбец 2й строки. Нумерация идёт с нуля,
-     первым аргументом идёт номер столбца.
-  */
 
+  // Читаем значение первого терморезистора и выводим на LCD
   sensor1 = analogRead(sensor1Pin);
   lcd.setCursor(0, 1);
   lcd.print("      ");
@@ -73,6 +74,7 @@ void loop()
   lcd.print(sensor1);
   lcd.write(byte(0));
 
+  // Читаем значение второго терморезистора и выводим на LCD
   sensor2 = analogRead(sensor2Pin);
   lcd.setCursor(6, 1);
   lcd.print("      ");
@@ -82,6 +84,7 @@ void loop()
   lcd.print(sensor2);
   lcd.write(byte(0));
 
+  // Читаем значение третьего терморезистора и выводим на LCD
   sensor3 = analogRead(sensor3Pin);
   lcd.setCursor(12, 1);
   lcd.print("      ");
@@ -90,5 +93,5 @@ void loop()
   sensor3 = map(sensor3, 282, 1023, 28, 150);
   lcd.print(sensor3);
   lcd.write(byte(0));
-  delay(1000);
+  delay(500);
 }
